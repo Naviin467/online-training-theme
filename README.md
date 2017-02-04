@@ -1,2 +1,3 @@
-# academica-pro-child
-Child theme for Academica Pro theme from WPZoom
+# Online Training Theme
+
+Theme created by Jason Taylor based on Academica Pro (WPZoom) commercial theme.
