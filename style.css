@@ -1,18 +1,11 @@
 /*
- Theme Name:   Academica Pro Child
- Theme URI:    https://github.com/awesomejt/academica-pro-child
- Description:  Academica Pro Child Theme
- Author:       Jason Taylor
- Author URI:   http://jasongtaylor.com
- Template:     academica_pro
- Version:      1.0.0
- License:      GNU General Public License v2 or later
- License URI:  http://www.gnu.org/licenses/gpl-2.0.html
- Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
- Text Domain:  academica-pro-child
+Theme Name: Academica Pro Child
+Theme URI: http://www.wpzoom.com/themes/academica-pro/
+Template: academica_pro
+Author: WPZOOM
+Author URI: http://www.wpzoom.com/
+Version: 2.0.4.1486236062
+Updated: 2017-02-04 19:21:02
+
 */
 
-#footer-copy .wpzoom {
-    display: none;
-    float: right;
-}
