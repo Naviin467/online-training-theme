@@ -12,6 +12,33 @@ if ( !function_exists( 'chld_thm_cfg_parent_css' ) ):
 endif;
 add_action( 'wp_enqueue_scripts', 'chld_thm_cfg_parent_css', 10 );
 
+// END ENQUEUE PARENT ACTION
+
+// Helper functions
+
+function ocs_taxonomy_config( $singular, $plural, $hierarchical ) {
+  // set up labels
+	$labels = array(
+		'name'              => $plural,
+		'singular_name'     => $singular,
+		'search_items'      => 'Search ' . $plural,
+		'all_items'         => 'All ' . $plural,
+		'edit_item'         => 'Edit ' . $singular,
+		'update_item'       => 'Update ' . $singular,
+		'add_new_item'      => 'Add New ' . $singular,
+		'new_item_name'     => 'New ' . $singular,
+		'menu_name'         => $plural
+	);
+
+  // register taxonomy
+	return array(
+		'hierarchical' => $hierarchical,
+		'labels' => $labels,
+		'query_var' => true,
+		'show_admin_column' => true
+	);
+}
+
 // Register Custom Post Types
 function ocs_register_course_post_type() {
 
@@ -186,76 +213,29 @@ add_action( 'init', 'ocs_register_tutorial_post_type' );
 
 // Register Custom taxonomies
 function ocs_register_question_category_taxonomy() {
-  // set up labels
-	$labels = array(
-		'name'              => 'Question Categories',
-		'singular_name'     => 'Question Category',
-		'search_items'      => 'Search Question Categories',
-		'all_items'         => 'All Question Categories',
-		'edit_item'         => 'Edit Question Category',
-		'update_item'       => 'Update Question Category',
-		'add_new_item'      => 'Add New Question Category',
-		'new_item_name'     => 'New Question Category',
-		'menu_name'         => 'Question Categories'
-	);
-	// register taxonomy
-	register_taxonomy( 'questioncat', 'question', array(
-		'hierarchical' => true,
-		'labels' => $labels,
-		'query_var' => true,
-		'show_admin_column' => true
-	) );
+  register_taxonomy( 'questioncat', 'question',
+    ocs_taxonomy_config('Question Category', 'Question Categories', true)
+  );
 }
 add_action( 'init', 'ocs_register_question_category_taxonomy' );
 
+function ocs_register_question_association_taxonomy() {
+  register_taxonomy( 'questassoc', 'question',
+    ocs_taxonomy_config('Question Association', 'Question Associations', false)
+  );
+}
+add_action( 'init', 'ocs_register_question_association_taxonomy' );
+
 function ocs_register_tutorial_category_taxonomy() {
-  // set up labels
-	$labels = array(
-		'name'              => 'Tutorial Categories',
-		'singular_name'     => 'Tutorial Category',
-		'search_items'      => 'Search Tutorial Categories',
-		'all_items'         => 'All Tutorial Categories',
-		'edit_item'         => 'Edit Tutorial Category',
-		'update_item'       => 'Update Tutorial Category',
-		'add_new_item'      => 'Add New Tutorial Category',
-		'new_item_name'     => 'New Tutorial Category',
-		'menu_name'         => 'Tutorial Categories'
-	);
-	// register taxonomy
-	register_taxonomy( 'tutcat', 'tutorial', array(
-		'hierarchical' => true,
-		'labels' => $labels,
-		'query_var' => true,
-		'show_admin_column' => true
-	) );
+	register_taxonomy( 'tutcat', 'tutorial',
+    ocs_taxonomy_config('Tutorial Category', 'Tutorial Categories', true)
+  );
 }
 add_action( 'init', 'ocs_register_tutorial_category_taxonomy' );
 
 function ocs_register_tutorial_topics_taxonomy() {
-  // set up labels
-	$labels = array(
-		'name'              => 'Tutorial Topics',
-		'singular_name'     => 'Tutorial Topic',
-		'search_items'      => 'Search Tutorial Topics',
-		'all_items'         => 'All Tutorial Topics',
-		'edit_item'         => 'Edit Tutorial Topic',
-		'update_item'       => 'Update Tutorial Topic',
-		'add_new_item'      => 'Add New Tutorial Topic',
-		'new_item_name'     => 'New Tutorial Topic',
-		'menu_name'         => 'Tutorial Topics'
-	);
-
-  // register taxonomy
-	register_taxonomy( 'tuttopic', 'tutorial', array(
-		'hierarchical' => false,
-		'labels' => $labels,
-		'query_var' => true,
-		'show_admin_column' => true
-	) );
+  register_taxonomy( 'tuttopic', 'tutorial',
+    ocs_taxonomy_config('Tutorial Topic', 'Tutorial Topics', false)
+  );
 }
 add_action( 'init', 'ocs_register_tutorial_topics_taxonomy' );
-
-
-
-
-// END ENQUEUE PARENT ACTION
