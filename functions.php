@@ -89,9 +89,6 @@ function ocs_register_post_type( $singular, $plural, $icon ) {
             'wpcom-markdown'
           )
   );
-
-  return $args;
-
   register_post_type( $slug, $args );
 }
 
