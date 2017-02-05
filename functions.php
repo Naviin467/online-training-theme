@@ -30,6 +30,63 @@ function ocs_taxonomy_config( $singular, $plural, $hierarchical ) {
 		'menu_name'         => $plural
 	);
 
+  function ocs_register_post_type( $singular, $plural, $icon ) {
+  	$slug = str_replace( ' ', '_', strtolower( $singular ) );
+  	$labels = array(
+  		'name' 			=> $plural,
+  		'singular_name' 	=> $singular,
+  		'add_new' 		=> 'Add New',
+  		'add_new_item'  	=> 'Add New ' . $singular,
+  		'edit'		        => 'Edit',
+  		'edit_item'	        => 'Edit ' . $singular,
+  		'new_item'	        => 'New ' . $singular,
+  		'view' 			=> 'View ' . $singular,
+  		'view_item' 		=> 'View ' . $singular,
+  		'search_term'   	=> 'Search ' . $plural,
+  		'parent' 		=> 'Parent ' . $singular,
+  		'not_found' 		=> 'No ' . $plural .' found',
+  		'not_found_in_trash' 	=> 'No ' . $plural .' in Trash'
+  		);
+  	$args = array(
+  		'labels'              => $labels,
+  	        'public'              => true,
+  	        'publicly_queryable'  => true,
+  	        'exclude_from_search' => false,
+  	        'show_in_nav_menus'   => true,
+  	        'show_ui'             => true,
+  	        'show_in_menu'        => true,
+  	        'show_in_admin_bar'   => true,
+  	        'menu_position'       => 10,
+  	        'menu_icon'           => $icon,
+  	        'can_export'          => true,
+  	        'delete_with_user'    => false,
+  	        'hierarchical'        => false,
+  	        'has_archive'         => true,
+  	        'query_var'           => true,
+  	        'capability_type'     => 'post',
+  	        'map_meta_cap'        => true,
+  	        // 'capabilities' => array(),
+  	        'rewrite'             => array(
+  	        	'slug' => $slug,
+  	        	'with_front' => true,
+  	        	'pages' => true,
+  	        	'feeds' => true,
+  	        ),
+  	        'supports'            => array(
+  	        	'title',
+  	        	'editor',
+  	        	'author',
+  	        	'custom-fields',
+              'wpcom-markdown'
+  	        )
+  	);
+
+    return $args;
+
+  	register_post_type( $slug, $args );
+  }
+
+
   // register taxonomy
 	return array(
 		'hierarchical' => $hierarchical,
@@ -40,202 +97,30 @@ function ocs_taxonomy_config( $singular, $plural, $hierarchical ) {
 }
 
 // Register Custom Post Types
-function ocs_register_course_post_type() {
-
-	$singular = 'Course';
-	$plural = 'Courses';
-	$slug = str_replace( ' ', '_', strtolower( $singular ) );
-	$labels = array(
-		'name' 			=> $plural,
-		'singular_name' 	=> $singular,
-		'add_new' 		=> 'Add New',
-		'add_new_item'  	=> 'Add New ' . $singular,
-		'edit'		        => 'Edit',
-		'edit_item'	        => 'Edit ' . $singular,
-		'new_item'	        => 'New ' . $singular,
-		'view' 			=> 'View ' . $singular,
-		'view_item' 		=> 'View ' . $singular,
-		'search_term'   	=> 'Search ' . $plural,
-		'parent' 		=> 'Parent ' . $singular,
-		'not_found' 		=> 'No ' . $plural .' found',
-		'not_found_in_trash' 	=> 'No ' . $plural .' in Trash'
-		);
-	$args = array(
-		'labels'              => $labels,
-	        'public'              => true,
-	        'publicly_queryable'  => true,
-	        'exclude_from_search' => false,
-	        'show_in_nav_menus'   => true,
-	        'show_ui'             => true,
-	        'show_in_menu'        => true,
-	        'show_in_admin_bar'   => true,
-	        'menu_position'       => 10,
-	        'menu_icon'           => 'dashicons-book',
-	        'can_export'          => true,
-	        'delete_with_user'    => false,
-	        'hierarchical'        => false,
-	        'has_archive'         => true,
-	        'query_var'           => true,
-	        'capability_type'     => 'post',
-	        'map_meta_cap'        => true,
-	        // 'capabilities' => array(),
-	        'rewrite'             => array(
-	        	'slug' => $slug,
-	        	'with_front' => true,
-	        	'pages' => true,
-	        	'feeds' => true,
-	        ),
-	        'supports'            => array(
-	        	'title',
-	        	'editor',
-	        	'author',
-	        	'custom-fields',
-            'wpcom-markdown'
-	        )
-	);
-	register_post_type( $slug, $args );
+function ocs_register_post_types() {
+  ocs_register_post_type( 'Course', 'Courses', 'dashicons-book' );
+  ocs_register_post_type( 'Question', 'Questions', 'dashicons-format-chat' );
+  ocs_register_post_type( 'Tutorial', 'Tutorials', 'dashicons-book-alt' );
+  ocs_register_post_type( 'Tip', 'Tips', 'dashicons-lightbulb' );
 }
-add_action( 'init', 'ocs_register_course_post_type' );
-
-function ocs_register_question_post_type() {
-
-	$singular = 'Question';
-	$plural = 'Questions';
-	$slug = str_replace( ' ', '_', strtolower( $singular ) );
-	$labels = array(
-		'name' 			=> $plural,
-		'singular_name' 	=> $singular,
-		'add_new' 		=> 'Add New',
-		'add_new_item'  	=> 'Add New ' . $singular,
-		'edit'		        => 'Edit',
-		'edit_item'	        => 'Edit ' . $singular,
-		'new_item'	        => 'New ' . $singular,
-		'view' 			=> 'View ' . $singular,
-		'view_item' 		=> 'View ' . $singular,
-		'search_term'   	=> 'Search ' . $plural,
-		'parent' 		=> 'Parent ' . $singular,
-		'not_found' 		=> 'No ' . $plural .' found',
-		'not_found_in_trash' 	=> 'No ' . $plural .' in Trash'
-		);
-	$args = array(
-		'labels'              => $labels,
-	        'public'              => true,
-	        'publicly_queryable'  => true,
-	        'exclude_from_search' => false,
-	        'show_in_nav_menus'   => true,
-	        'show_ui'             => true,
-	        'show_in_menu'        => true,
-	        'show_in_admin_bar'   => true,
-	        'menu_position'       => 10,
-	        'menu_icon'           => 'dashicons-format-chat',
-	        'can_export'          => true,
-	        'delete_with_user'    => false,
-	        'hierarchical'        => false,
-	        'has_archive'         => true,
-	        'query_var'           => true,
-	        'capability_type'     => 'post',
-	        'map_meta_cap'        => true,
-	        // 'capabilities' => array(),
-	        'rewrite'             => array(
-	        	'slug' => $slug,
-	        	'with_front' => true,
-	        	'pages' => true,
-	        	'feeds' => true,
-	        ),
-	        'supports'            => array(
-	        	'title',
-	        	'editor',
-	        	'author',
-	        	'custom-fields',
-            'wpcom-markdown'
-	        )
-	);
-	register_post_type( $slug, $args );
-}
-add_action( 'init', 'ocs_register_question_post_type' );
-
-function ocs_register_tutorial_post_type() {
-
-	$singular = 'Tutorial';
-	$plural = 'Tutorials';
-	$slug = str_replace( ' ', '_', strtolower( $singular ) );
-	$labels = array(
-		'name' 			=> $plural,
-		'singular_name' 	=> $singular,
-		'add_new' 		=> 'Add New',
-		'add_new_item'  	=> 'Add New ' . $singular,
-		'edit'		        => 'Edit',
-		'edit_item'	        => 'Edit ' . $singular,
-		'new_item'	        => 'New ' . $singular,
-		'view' 			=> 'View ' . $singular,
-		'view_item' 		=> 'View ' . $singular,
-		'search_term'   	=> 'Search ' . $plural,
-		'parent' 		=> 'Parent ' . $singular,
-		'not_found' 		=> 'No ' . $plural .' found',
-		'not_found_in_trash' 	=> 'No ' . $plural .' in Trash'
-		);
-	$args = array(
-		'labels'              => $labels,
-	        'public'              => true,
-	        'publicly_queryable'  => true,
-	        'exclude_from_search' => false,
-	        'show_in_nav_menus'   => true,
-	        'show_ui'             => true,
-	        'show_in_menu'        => true,
-	        'show_in_admin_bar'   => true,
-	        'menu_position'       => 10,
-	        'menu_icon'           => 'dashicons-book-alt',
-	        'can_export'          => true,
-	        'delete_with_user'    => false,
-	        'hierarchical'        => false,
-	        'has_archive'         => true,
-	        'query_var'           => true,
-	        'capability_type'     => 'post',
-	        'map_meta_cap'        => true,
-	        // 'capabilities' => array(),
-	        'rewrite'             => array(
-	        	'slug' => $slug,
-	        	'with_front' => true,
-	        	'pages' => true,
-	        	'feeds' => true,
-	        ),
-	        'supports'            => array(
-	        	'title',
-	        	'editor',
-	        	'author',
-	        	'custom-fields',
-            'wpcom-markdown'
-	        )
-	);
-	register_post_type( $slug, $args );
-}
-add_action( 'init', 'ocs_register_tutorial_post_type' );
+add_action( 'init', 'ocs_register_post_types' );
 
 // Register Custom taxonomies
-function ocs_register_question_category_taxonomy() {
+function ocs_register_taxonomies() {
   register_taxonomy( 'questioncat', 'question',
     ocs_taxonomy_config('Question Category', 'Question Categories', true)
   );
-}
-add_action( 'init', 'ocs_register_question_category_taxonomy' );
-
-function ocs_register_question_association_taxonomy() {
-  register_taxonomy( 'questassoc', 'question',
-    ocs_taxonomy_config('Question Association', 'Question Associations', false)
+  register_taxonomy( 'association', array('question','tip','tutorial'),
+    ocs_taxonomy_config('Association', 'Associations', false)
   );
-}
-add_action( 'init', 'ocs_register_question_association_taxonomy' );
-
-function ocs_register_tutorial_category_taxonomy() {
-	register_taxonomy( 'tutcat', 'tutorial',
+  register_taxonomy( 'tutcat', 'tutorial',
     ocs_taxonomy_config('Tutorial Category', 'Tutorial Categories', true)
   );
-}
-add_action( 'init', 'ocs_register_tutorial_category_taxonomy' );
-
-function ocs_register_tutorial_topics_taxonomy() {
-  register_taxonomy( 'tuttopic', 'tutorial',
-    ocs_taxonomy_config('Tutorial Topic', 'Tutorial Topics', false)
+  register_taxonomy( 'tipcat', 'tip',
+    ocs_taxonomy_config('Tip Category', 'Tip Categories', true)
+  );
+  register_taxonomy( 'topic', array('course', 'tip', 'question', 'tutorial'),
+    ocs_taxonomy_config('Topic', 'Topics', false)
   );
 }
-add_action( 'init', 'ocs_register_tutorial_topics_taxonomy' );
+add_action( 'init', 'ocs_register_taxonomies' );
