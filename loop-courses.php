@@ -6,35 +6,25 @@ $args = array(
 	'posts_per_page' => 25,
 );
 
-$testimonials = new WP_Query( $args );
+$courses = new WP_Query( $args );
 
-if ( $testimonials->have_posts() ) {
+if ( $courses->have_posts() ) {
 ?>
 
 <ul class="posts-archive archives-columns-one posts-archive-courses">
 
 <?php
-while ( $testimonials->have_posts() ) : $testimonials->the_post();
-
-$testimonial_author = get_post_meta($post->ID, 'wpzoom_testimonial_author', true);
-$testimonial_position = get_post_meta($post->ID, 'wpzoom_testimonial_author_position', true);
-$testimonial_company = get_post_meta($post->ID, 'wpzoom_testimonial_author_company', true);
-$testimonial_company_url = get_post_meta($post->ID, 'wpzoom_testimonial_author_company_url', true);
+while ( $courses->have_posts() ) : $courses->the_post();
 ?>
-
-	<li class="loop-post-single loop-post-border loop-post-testimonial">
+	<li class="loop-post-single loop-post-border loop-post-courses">
 		<figure>
+			<h2 id="post-<?php the_ID(); ?>" class="post-title">
+				<a href="<?php the_post_thumbnail_url( 'thumbnail' ); ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>">
+<a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
 			<div class="post-excerpt">
-
-				<blockquote class="testimonial"><?php the_content(); ?></blockquote>
-				<figcaption class="wpzoom-author"><?php
-				if ($testimonial_author) {echo "$testimonial_author, ";}
-				if ($testimonial_position) {echo "<span class=\"position\">$testimonial_position ";}
-				if ($testimonial_company_url) {echo "<a href=\"$testimonial_company_url\">$testimonial_company</a>";}
-				else {echo "$testimonial_company";}
-				if ($testimonial_position) {echo "</span>";}
-				?></figcaption>
-
+				<blockquote class="course">
+					<?php the_excerpt(); ?>
+				</blockquote>
 			</div><!-- end .post-excerpt -->
 		</figure>
 		<div class="cleaner">&nbsp;</div>

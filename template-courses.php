@@ -14,21 +14,7 @@ Template Name: Courses List
 
 		<div class="wrapper">
 
-			<?php while (have_posts()) : the_post();
-			$template = get_post_meta($post->ID, 'wpzoom_post_template', true);
-			?>
-
-			<?php if (!isset($no_side_left) && $template != 'side-right' && $template != 'full') { ?>
-			<div class="column column-narrow">
-
-				<?php
-				if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('Sidebar: Left Column') ) : ?> <?php endif;
-				?>
-
-				<div class="cleaner">&nbsp;</div>
-
-			</div><!-- end .column .column-narrow -->
-			<?php } ?>
+			<?php while (have_posts()) : the_post(); ?>
 
 			<div class="column <?php
 			if (isset($no_side_left) && !isset($no_side_right)) {
@@ -43,7 +29,6 @@ Template Name: Courses List
 
 				<div class="widget">
 					<h1 class="post-title"><?php the_title(); ?></h1>
-					<?php edit_post_link( __('Edit page', 'wpzoom'), '<p class="post-meta">', '</p>'); ?>
 
 					<div class="post-content">
 						<?php the_content(); ?>
@@ -62,17 +47,6 @@ Template Name: Courses List
 				<div class="cleaner">&nbsp;</div>
 
 			</div><!-- end .column .column-medium -->
-
-			<?php if (!isset($no_side_right) && $template != 'side-left' && $template != 'full') { ?>
-			<div class="column column-narrow column-last">
-
-				<?php
-				if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('Sidebar: Right Column') ) : ?> <?php endif;
-				?>
-				<div class="cleaner">&nbsp;</div>
-
-			</div><!-- end .column .column-narrow -->
-			<?php } ?>
 
 			<div class="cleaner">&nbsp;</div>
 			<?php endwhile; ?>

@@ -8,23 +8,21 @@
 		?>
 
 		<div class="wrapper">
-
+			<h1>Course Single Page</h1>
 			<?php while (have_posts()) : the_post();
 			$featured_image = get_post_meta($post->ID, 'wpzoom_featured_show', true);
 			$template = get_post_meta($post->ID, 'wpzoom_post_template', true);
 			?>
-
+			<h1>List Price: <?php the_field('list_price'); ?></h1>
+			<h1>Sales Price: <?php the_field('sale_price'); ?></h1>
 			<?php
 			if ($featured_image == 'Full Width') { ?>
-			<?php get_the_image( array( 'size' => 'thumb-full', 'width' => 960, 'height' => 350, 'attachment' => false, 'image_scan' => false, 'before' => '<div class="post-cover post-cover-full single-cover">', 'after' => '</div><!-- end .post-cover -->', 'link_to_post' => false) ); ?>
+			<?php get_the_image( array( 'size' => 'thumb-full', 'width' => 960, 'height' => 350, 'attachment' => false, 'image_scan' => false, 'before' => '<section class="post-cover post-cover-full single-cover">', 'after' => '</section><!-- end .post-cover -->', 'link_to_post' => false) ); ?>
 			<?php } ?>
 
 			<?php if (!isset($no_side_left) && $template != 'side-right' && $template != 'full') { ?>
 			<div class="column column-narrow">
-
-				<?php
-				if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('Sidebar: Left Column') ) : ?> <?php endif;
-				?>
+				<?php dynamic_sidebar('Sidebar: Left Column'); ?>
 
 				<div class="cleaner">&nbsp;</div>
 
@@ -44,13 +42,13 @@
 
 				<?php
 				if ($featured_image == 'Narrow' && ($template == 'side-both' || !$template)) {
-					get_the_image( array( 'size' => 'thumb-singular', 'width' => 470, 'attachment' => false, 'image_scan' => false, 'before' => '<div class="post-cover single-cover">', 'after' => '</div><!-- end .post-cover -->', 'link_to_post' => false ) );
+					get_the_image( array( 'size' => 'page-small', 'width' => 470, 'attachment' => false, 'image_scan' => false, 'before' => '<section class="post-cover single-cover">', 'after' => '</section><!-- end .post-cover -->', 'link_to_post' => false ) );
 				} elseif ($featured_image == 'Narrow' && ( $template == 'side-left' || $template == 'side-right' )) {
-					get_the_image( array( 'size' => 'homepage-slider', 'width' => 715, 'attachment' => false, 'image_scan' => false, 'before' => '<div class="post-cover single-cover">', 'after' => '</div><!-- end .post-cover -->', 'link_to_post' => false ) );
+					get_the_image( array( 'size' => 'page-top', 'width' => 715, 'attachment' => false, 'image_scan' => false, 'before' => '<section class="post-cover single-cover">', 'after' => '</section><!-- end .post-cover -->', 'link_to_post' => false ) );
 				}
 				?>
 
-				<div class="widget">
+				<div class="content-block">
 					<h1 class="post-title"><?php the_title(); ?></h1>
 					<?php edit_post_link( __('Edit testimonial', 'wpzoom'), '<p class="post-meta">', '</p>'); ?>
 
@@ -87,7 +85,7 @@
 					<?php } ?>
 
 					<div class="cleaner">&nbsp;</div>
-				</div><!-- end .widget -->
+				</div><!-- end .content-block -->
 
 				<div class="cleaner">&nbsp;</div>
 
@@ -96,9 +94,7 @@
 			<?php if (!isset($no_side_right) && $template != 'side-left' && $template != 'full') { ?>
 			<div class="column column-narrow column-last">
 
-				<?php
-				if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('Sidebar: Right Column') ) : ?> <?php endif;
-				?>
+				<?php dynamic_sidebar('Sidebar: Right Column'); ?>
 				<div class="cleaner">&nbsp;</div>
 
 			</div><!-- end .column .column-narrow -->
