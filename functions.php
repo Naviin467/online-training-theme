@@ -11,3 +11,9 @@ if ( !function_exists( 'chld_thm_cfg_parent_css' ) ):
     }
 endif;
 add_action( 'wp_enqueue_scripts', 'chld_thm_cfg_parent_css', 10 );
+
+function my_assets() {
+	wp_enqueue_style( 'style', get_stylesheet_directory_uri() . '/style.css' );
+}
+
+add_action( 'wp_enqueue_scripts', 'my_assets' );
